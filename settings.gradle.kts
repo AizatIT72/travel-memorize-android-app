@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("convention-plugins")
     repositories {
         google {
             content {
@@ -21,3 +22,12 @@ dependencyResolutionManagement {
 
 rootProject.name = "travel_memorize_app"
 include(":app")
+include(":core:domain")
+include(":core:network")
+include(":core:data")
+include(":core:build-config:api")
+include(":core:build-config:impl")
+include(":core:utils")
+include(":core:ui")
+include(":feature:auth")
+include(":feature:map")
