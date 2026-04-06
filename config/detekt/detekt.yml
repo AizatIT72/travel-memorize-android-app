@@ -1,0 +1,28 @@
+config:
+  validation: true
+  warningsAsErrors: false
+
+build:
+  maxIssues: 50
+
+naming:
+  active: true
+  FunctionNaming:
+    active: false
+  ClassNaming:
+    active: true
+  VariableNaming:
+    active: true
+  PackageNaming:
+    active: false
+
+style:
+  active: true
+  UnusedImports:
+    active: true
+  MagicNumber:
+    active: false
+  WildcardImport:
+    active: false
+  NewLineAtEndOfFile:
+    active: false

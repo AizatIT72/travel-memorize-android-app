@@ -13,6 +13,9 @@
 .externalNativeBuild
 .cxx
 local.properties
+# Detekt
+build/reports/detekt/
+.detekt/
 
 /.idea
 /.kotlin
