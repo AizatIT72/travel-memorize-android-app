@@ -5,6 +5,15 @@ config:
 build:
   maxIssues: 50
 
+formatting:
+  active: true
+  indent:
+    active: true
+    indentSize: 4
+  maximumLineLength:
+    active: true
+    maxLineLength: 120
+
 naming:
   active: true
   FunctionNaming:

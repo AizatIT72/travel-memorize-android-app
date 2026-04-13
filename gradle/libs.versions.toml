@@ -43,6 +43,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 x-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 
 detekt-gradle-plugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
+detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 
 # Compose
 x-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "compose-activity" }
