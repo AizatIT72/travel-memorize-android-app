@@ -12,11 +12,13 @@ class AndroidAppConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             apply(plugin = libs.findPlugin("android-application").get().get().pluginId)
+            apply(plugin = "app.detekt")
 
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
                 defaultConfig.targetSdk = libs.findVersion("target-sdk").get().toString().toInt()
             }
+
         }
     }
 }

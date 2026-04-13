@@ -1,0 +1,37 @@
+config:
+  validation: true
+  warningsAsErrors: false
+
+build:
+  maxIssues: 50
+
+formatting:
+  active: true
+  indent:
+    active: true
+    indentSize: 4
+  maximumLineLength:
+    active: true
+    maxLineLength: 120
+
+naming:
+  active: true
+  FunctionNaming:
+    active: false
+  ClassNaming:
+    active: true
+  VariableNaming:
+    active: true
+  PackageNaming:
+    active: false
+
+style:
+  active: true
+  UnusedImports:
+    active: true
+  MagicNumber:
+    active: false
+  WildcardImport:
+    active: false
+  NewLineAtEndOfFile:
+    active: false

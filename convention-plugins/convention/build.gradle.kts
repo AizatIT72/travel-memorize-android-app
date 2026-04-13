@@ -20,6 +20,8 @@ kotlin {
 dependencies {
     compileOnly(libs.android.gradle.plugin)
     compileOnly(libs.kotlin.gradle.plugin)
+    compileOnly(libs.detekt.gradle.plugin)
+    implementation(libs.detekt.formatting)
 }
 
 gradlePlugin {
@@ -43,6 +45,10 @@ gradlePlugin {
         register("androidDagger") {
             id = libs.plugins.app.dagger.get().pluginId                // ← app.dagger
             implementationClass = "DaggerConventionPlugin"
+        }
+        register("detekt") {
+            id = "app.detekt"
+            implementationClass = "DetektConventionPlugin"
         }
     }
 }

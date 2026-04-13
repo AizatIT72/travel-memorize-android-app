@@ -11,6 +11,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             apply(plugin = libs.findPlugin("android-library").get().get().pluginId)
+            apply(plugin = "app.detekt")
 
             extensions.configure<LibraryExtension> {
                 // Since AGP 9.0 Kotlin setup no more required
