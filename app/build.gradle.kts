@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.app.android.application)
     alias(libs.plugins.app.compose)
     alias(libs.plugins.app.dagger)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -31,7 +32,15 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
     implementation(project(":core:network"))
+    implementation(project(":core:ui"))
+    implementation(project(":feature:auth"))
+    implementation(project(":feature:map"))
     implementation(project(path = ":core:build-config:api"))
     implementation(project(path = ":core:build-config:impl"))
     implementation(project(path = ":core:utils"))
+
+    implementation("androidx.navigation:navigation-compose:2.9.0")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
 }

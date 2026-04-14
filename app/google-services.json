@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "914040036926",
+    "project_id": "travel-memorize",
+    "storage_bucket": "travel-memorize.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914040036926:android:bcec9350924cdcc580fb6f",
+        "android_client_info": {
+          "package_name": "com.tbank.travelmemorize"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDs4IznOA1A0CbGtZjnrPUh5qjEfVZYWmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914040036926:android:194aec6dd18d72d580fb6f",
+        "android_client_info": {
+          "package_name": "ru.itis.android.travel_memorize_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDs4IznOA1A0CbGtZjnrPUh5qjEfVZYWmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Travel Memorize</string>
+    <string name="button_save">Save</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_get_started">Get Started -&gt;</string>
+    <string name="button_register">Register</string>
+    <string name="button_login">Login</string>
+    <string name="button_send_reset_link">Send reset link</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_invalid_email">Invalid email format</string>
+    <string name="error_invalid_username">Username: 3-20 chars, latin letters and digits</string>
+    <string name="error_password_length">Password must be at least 6 characters</string>
+    <string name="error_passwords_not_match">Passwords do not match</string>
+    <string name="error_unknown">Something went wrong</string>
+    <string name="onboarding_title">Travel Memorize</string>
+    <string name="onboarding_subtitle">Curate Your Journey</string>
+    <string name="onboarding_description">Every mile a memory, every destination a story.</string>
+    <string name="signup_title">Create Account</string>
+    <string name="signup_subtitle">Start archiving your journeys today</string>
+    <string name="signin_title">Welcome Back</string>
+    <string name="signin_subtitle">Continue your journey through memories</string>
+    <string name="forgot_title">Reset Password</string>
+    <string name="forgot_subtitle">Enter your email to receive a reset link.</string>
+    <string name="label_username">Username</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+    <string name="label_confirm_password">Confirm Password</string>
+    <string name="link_forgot_password">Forgot password?</string>
+    <string name="signin_have_no_account">Don\'t have an account?</string>
+    <string name="signin_register_now">Register now</string>
+    <string name="signup_have_account">Already have an account?</string>
+    <string name="signup_login_now">Login now</string>
+    <string name="forgot_back_to_sign_in">Back to Sign In</string>
+    <string name="toast_reset_sent">Reset link sent to email</string>
+    <string name="map_placeholder_title">Map screen placeholder</string>
+</resources>

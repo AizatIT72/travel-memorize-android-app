@@ -4,44 +4,42 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import ru.itis.android.travel_memorize_app.ui.theme.Travel_memorize_appTheme
+import androidx.compose.runtime.*
+import ru.itis.android.travel_memorize_app.core.domain.utils.Result
+import ru.itis.android.travel_memorize_app.core.ui.theme.TravelMemorizeTheme
+import ru.itis.android.travel_memorize_app.navigation.AppNavGraph
+import ru.itis.android.travel_memorize_app.navigation.Routes
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val appComponent = (application as TravelMemorizeApplication).appComponent
         enableEdgeToEdge()
+
         setContent {
-            Travel_memorize_appTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+            var startDestination by remember { mutableStateOf<String?>(null) }
+
+            LaunchedEffect(Unit) {
+                val currentUserResult = appComponent.getCurrentUserUseCase().invoke()
+                startDestination = when (currentUserResult) {
+                    is Result.Success -> {
+                        val user = currentUserResult.data
+                        if (user != null) Routes.Map else Routes.Onboarding
+                    }
+                    is Result.Error -> Routes.Onboarding
+                }
+            }
+
+            TravelMemorizeTheme {
+                startDestination?.let {
+                    AppNavGraph(
+                        startDestination = it,
+                        signUpUseCase = appComponent.signUpUseCase(),
+                        signInUseCase = appComponent.signInUseCase(),
+                        sendPasswordResetUseCase = appComponent.sendPasswordResetUseCase()
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Travel_memorize_appTheme {
-        Greeting("Android")
     }
 }

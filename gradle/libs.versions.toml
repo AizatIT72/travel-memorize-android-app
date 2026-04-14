@@ -36,6 +36,9 @@ espressoCore = "3.7.0"
 #Detekt
 detekt = "1.23.8"
 
+firebase-bom = "33.0.0"
+google-services = "4.4.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -74,6 +77,13 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
+#Fitrbase
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore-ktx" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage-ktx" }
+google-services-plugin = { group = "com.google.gms", name = "google-services", version.ref = "google-services" }
+
 
 
 [bundles]
@@ -87,6 +97,7 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 #Detekt
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+google-services = { id = "com.google.gms.google-services", version = "4.4.0" }
 
 
 # Project Internal convention plugins
@@ -95,3 +106,4 @@ app-android-library = { id = "app.android.libary" }
 app-compose = { id = "app.compose" }
 app-hilt = { id = "app.hilt" }
 app-dagger = { id = "app.dagger" }
+app-firebase = { id = "app.firebase" }

@@ -1,0 +1,14 @@
+<resources>
+    <color name="tm_background">#FCF9F4</color>
+    <color name="tm_surface">#FFFFFF</color>
+    <color name="tm_primary_dark">#163429</color>
+    <color name="tm_primary_light">#2D4B3F</color>
+    <color name="tm_text_primary">#1C1C19</color>
+    <color name="tm_text_secondary">#414845</color>
+    <color name="tm_text_muted">#A8A29E</color>
+    <color name="tm_input_bg">#EBE8E3</color>
+    <color name="tm_divider">#E5E2DD</color>
+    <color name="tm_link">#43664D</color>
+    <color name="tm_error">#BA1A1A</color>
+    <color name="tm_icon_bg">#F0EDE8</color>
+</resources>
