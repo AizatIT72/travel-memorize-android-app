@@ -88,7 +88,13 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun getCurrentUser(): Result<User?> {
         return try {
             val firebaseUser = firebaseAuth.currentUser ?: return Result.Success(null)
-            val username = getUsername(firebaseUser.uid)
+            val username = try {
+                getUsername(firebaseUser.uid)
+            } catch (e: Exception) {
+                // Если не удалось загрузить имя из Firestore, возвращаем пустую строку, 
+                // но не прерываем процесс авторизации.
+                ""
+            }
             Result.Success(
                 User(
                     uid = firebaseUser.uid,

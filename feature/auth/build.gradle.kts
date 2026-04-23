@@ -5,7 +5,8 @@ plugins {
 }
 
 android {
-    namespace = "ru.itis.android.travel_memorize_app.auth"
+    namespace = "ru.itis.android.travel_memorize_app.feature.auth"
+    compileSdk = 36
 }
 
 dependencies {
