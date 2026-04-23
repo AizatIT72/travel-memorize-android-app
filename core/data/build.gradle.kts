@@ -12,6 +12,7 @@ dependencies {
     implementation(project(path = ":core:domain"))
     implementation(project(path = ":core:network"))
     implementation(project(path = ":core:build-config:api"))
+    implementation(project(path = ":core:build-config:impl"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

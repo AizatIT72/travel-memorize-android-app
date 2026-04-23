@@ -3,10 +3,11 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.app.android.library)
+    alias(libs.plugins.app.dagger)
 }
 
 android {
-    namespace = "ru.itis.android.travel_memorize_app.impl"
+    namespace = "ru.itis.android.travel_memorize_app.core.build_config.impl"
 
     buildFeatures {
         buildConfig = true

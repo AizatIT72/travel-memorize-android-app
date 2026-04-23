@@ -22,7 +22,6 @@ dependencies {
     compileOnly(libs.kotlin.gradle.plugin)
     compileOnly(libs.detekt.gradle.plugin)
     implementation(libs.detekt.formatting)
-    compileOnly(libs.google.services.plugin)
 }
 
 gradlePlugin {

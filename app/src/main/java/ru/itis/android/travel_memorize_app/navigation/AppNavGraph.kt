@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -18,6 +19,8 @@ import ru.itis.android.travel_memorize_app.feature.auth.ui.SignUpScreen
 import ru.itis.android.travel_memorize_app.feature.auth.viewmodel.ForgotPasswordViewModel
 import ru.itis.android.travel_memorize_app.feature.auth.viewmodel.SignInViewModel
 import ru.itis.android.travel_memorize_app.feature.auth.viewmodel.SignUpViewModel
+import ru.itis.android.travel_memorize_app.feature.map.presentation.MapScreen
+import ru.itis.android.travel_memorize_app.feature.map.presentation.MapViewModel
 import ru.itis.android.travel_memorize_app.ui.R
 
 object Routes {
@@ -33,7 +36,8 @@ fun AppNavGraph(
     startDestination: String,
     signUpUseCase: SignUpUseCase,
     signInUseCase: SignInUseCase,
-    sendPasswordResetUseCase: SendPasswordResetUseCase
+    sendPasswordResetUseCase: SendPasswordResetUseCase,
+    mapViewModelFactory: MapViewModel.Factory
 ) {
     val navController = rememberNavController()
 
@@ -123,7 +127,8 @@ fun AppNavGraph(
         }
 
         composable(Routes.Map) {
-            Text(text = stringResource(id = R.string.map_placeholder_title))
+            val viewModel = remember { mapViewModelFactory.create() }
+            MapScreen(viewModel = viewModel)
         }
     }
 }
