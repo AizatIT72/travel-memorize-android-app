@@ -1,59 +1,68 @@
 package ru.itis.android.travel_memorize_app.core.data.repository
 
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.Timestamp
 import javax.inject.Inject
+import kotlinx.coroutines.tasks.await
+import ru.itis.android.travel_memorize_app.core.data.utils.FirebaseAuthErrorMapper
 import ru.itis.android.travel_memorize_app.core.domain.model.User
 import ru.itis.android.travel_memorize_app.core.domain.repository.AuthRepository
+import ru.itis.android.travel_memorize_app.core.domain.utils.AppError
 import ru.itis.android.travel_memorize_app.core.domain.utils.Result
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val firestore: FirebaseFirestore
 ) : AuthRepository {
-
-    override suspend fun signUp(email: String, password: String, username: String): Result<User> {
+    override suspend fun signUp(
+        email: String,
+        password: String,
+        username: String
+    ): Result<User> {
         return try {
-            val authResult = suspendCoroutine { continuation ->
-                firebaseAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnSuccessListener { continuation.resume(it) }
-                    .addOnFailureListener { continuation.resumeWithException(it) }
-            }
-            val firebaseUser = authResult.user ?: return Result.Error("User is null")
-            val data = mapOf(
-                "username" to username,
-                "email" to email,
-                "stats" to mapOf(
-                    "countries" to 0,
-                    "cities" to 0,
-                    "memoriesCount" to 0
+            val trimmedEmail = email.trim()
+            val trimmedUsername = username.trim()
+            val authResult = firebaseAuth
+                .createUserWithEmailAndPassword(trimmedEmail, password)
+                .await()
+            val firebaseUser = authResult.user
+                ?: return Result.Error(AppError.Auth.Unknown)
+            val userData = mapOf(
+                USERNAME_FIELD to trimmedUsername,
+                EMAIL_FIELD to trimmedEmail,
+                STATS_FIELD to mapOf(
+                    COUNTRIES_FIELD to 0,
+                    CITIES_FIELD to 0,
+                    MEMORIES_COUNT_FIELD to 0
                 ),
-                "searchUsername" to username.lowercase(),
-                "createdAt" to Timestamp.now()
+                SEARCH_USERNAME_FIELD to trimmedUsername.lowercase(),
+                CREATED_AT_FIELD to Timestamp.now()
             )
-            suspendCoroutine<Unit> { continuation ->
-                firestore.collection("users").document(firebaseUser.uid).set(data)
-                    .addOnSuccessListener { continuation.resume(Unit) }
-                    .addOnFailureListener { continuation.resumeWithException(it) }
-            }
-            Result.Success(User(firebaseUser.uid, email, username))
+            firestore.collection(USERS_COLLECTION)
+                .document(firebaseUser.uid)
+                .set(userData)
+                .await()
+            Result.Success(
+                User(
+                    uid = firebaseUser.uid,
+                    email = trimmedEmail,
+                    username = trimmedUsername
+                )
+            )
         } catch (throwable: Throwable) {
-            Result.Error(throwable.message ?: "Sign up error", throwable)
+            Result.Error(FirebaseAuthErrorMapper.mapSignUpError(throwable))
         }
     }
 
     override suspend fun signIn(email: String, password: String): Result<User> {
         return try {
-            val authResult = suspendCoroutine { continuation ->
-                firebaseAuth.signInWithEmailAndPassword(email, password)
-                    .addOnSuccessListener { continuation.resume(it) }
-                    .addOnFailureListener { continuation.resumeWithException(it) }
-            }
-            val firebaseUser = authResult.user ?: return Result.Error("User is null")
+            val trimmedEmail = email.trim()
+            val authResult = firebaseAuth
+                .signInWithEmailAndPassword(trimmedEmail, password)
+                .await()
+            val firebaseUser = authResult.user
+                ?: return Result.Error(AppError.Auth.Unknown)
             val username = getUsername(firebaseUser.uid)
             Result.Success(
                 User(
@@ -63,23 +72,20 @@ class AuthRepositoryImpl @Inject constructor(
                 )
             )
         } catch (throwable: Throwable) {
-            Result.Error(throwable.message ?: "Sign in error", throwable)
+            Result.Error(FirebaseAuthErrorMapper.mapSignInError(throwable))
         }
     }
 
     override suspend fun sendPasswordResetEmail(email: String): Result<Unit> {
         return try {
-            suspendCoroutine<Unit> { continuation ->
-                firebaseAuth.sendPasswordResetEmail(email)
-                    .addOnSuccessListener { continuation.resume(Unit) }
-                    .addOnFailureListener { continuation.resumeWithException(it) }
-            }
+            firebaseAuth
+                .sendPasswordResetEmail(email.trim())
+                .await()
             Result.Success(Unit)
         } catch (throwable: Throwable) {
-            Result.Error(throwable.message ?: "Reset error", throwable)
+            Result.Error(FirebaseAuthErrorMapper.mapResetPasswordError(throwable))
         }
     }
-
     override suspend fun signOut(): Result<Unit> {
         firebaseAuth.signOut()
         return Result.Success(Unit)
@@ -87,7 +93,8 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun getCurrentUser(): Result<User?> {
         return try {
-            val firebaseUser = firebaseAuth.currentUser ?: return Result.Success(null)
+            val firebaseUser = firebaseAuth.currentUser
+                ?: return Result.Success(null)
             val username = getUsername(firebaseUser.uid)
             Result.Success(
                 User(
@@ -97,18 +104,27 @@ class AuthRepositoryImpl @Inject constructor(
                 )
             )
         } catch (throwable: Throwable) {
-            Result.Error(throwable.message ?: "Current user error", throwable)
+            Result.Error(AppError.Auth.Unknown)
         }
     }
 
     private suspend fun getUsername(uid: String): String {
-        val snapshot = suspendCoroutine { continuation ->
-            firestore.collection("users")
-                .document(uid)
-                .get()
-                .addOnSuccessListener { continuation.resume(it) }
-                .addOnFailureListener { continuation.resumeWithException(it) }
-        }
-        return snapshot.getString("username").orEmpty()
+        val snapshot = firestore.collection(USERS_COLLECTION)
+            .document(uid)
+            .get()
+            .await()
+        return snapshot.getString(USERNAME_FIELD).orEmpty()
+    }
+
+    private companion object {
+        const val USERS_COLLECTION = "users"
+        const val USERNAME_FIELD = "username"
+        const val EMAIL_FIELD = "email"
+        const val STATS_FIELD = "stats"
+        const val SEARCH_USERNAME_FIELD = "searchUsername"
+        const val CREATED_AT_FIELD = "createdAt"
+        const val COUNTRIES_FIELD = "countries"
+        const val CITIES_FIELD = "cities"
+        const val MEMORIES_COUNT_FIELD = "memoriesCount"
     }
 }

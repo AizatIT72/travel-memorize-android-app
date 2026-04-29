@@ -39,10 +39,6 @@ gradlePlugin {
             id = libs.plugins.app.compose.get().pluginId               // ← app.compose
             implementationClass = "ComposeConventionPlugin"
         }
-        register("androidHilt") {
-            id = libs.plugins.app.hilt.get().pluginId                  // ← app.hilt
-            implementationClass = "HiltConventionPlugin"
-        }
         register("androidDagger") {
             id = libs.plugins.app.dagger.get().pluginId                // ← app.dagger
             implementationClass = "DaggerConventionPlugin"

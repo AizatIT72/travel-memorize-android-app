@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.app.android.library)
+    alias(libs.plugins.app.dagger)
+    alias(libs.plugins.app.compose)
 }
 
 android {
@@ -10,5 +12,6 @@ dependencies {
     implementation(project(path = ":core:domain"))
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.retrofit)
+    implementation(libs.x.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.viewmodel)
 }

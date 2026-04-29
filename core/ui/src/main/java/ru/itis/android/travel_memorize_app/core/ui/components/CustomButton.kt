@@ -3,9 +3,11 @@ package ru.itis.android.travel_memorize_app.core.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -30,6 +32,14 @@ fun CustomButton(
     endIcon: (@Composable () -> Unit)? = null
 ) {
     val shape = RoundedCornerShape(999.dp)
+    val colorScheme = MaterialTheme.colorScheme
+
+    val backgroundBrush = Brush.horizontalGradient(
+        colors = listOf(
+            colorScheme.primary.copy(alpha = if (enabled) 1f else 0.35f),
+            colorScheme.secondary.copy(alpha = if (enabled) 1f else 0.35f)
+        )
+    )
 
     Button(
         onClick = onClick,
@@ -54,14 +64,7 @@ fun CustomButton(
                 .fillMaxWidth()
                 .height(height)
                 .clip(shape)
-                .background(
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(
-                            Color(0xFF163429),
-                            Color(0xFF2D4B3F)
-                        )
-                    )
-                )
+                .background(backgroundBrush)
                 .padding(horizontal = 24.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
@@ -69,11 +72,11 @@ fun CustomButton(
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodyLarge,
-                color = Color.White
+                color = colorScheme.onPrimary
             )
 
             if (endIcon != null) {
-                androidx.compose.foundation.layout.Spacer(modifier = Modifier.padding(start = 6.dp))
+                Spacer(modifier = Modifier.width(6.dp))
                 endIcon()
             }
         }

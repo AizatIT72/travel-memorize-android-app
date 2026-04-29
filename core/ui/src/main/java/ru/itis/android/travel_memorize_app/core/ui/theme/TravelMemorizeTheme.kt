@@ -1,10 +1,13 @@
 package ru.itis.android.travel_memorize_app.core.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -24,6 +27,19 @@ private val AppColors: ColorScheme = lightColorScheme(
     onBackground = Color(0xFF1C1C19),
     onSurface = Color(0xFF1C1C19),
     onError = Color.White
+)
+
+private val DarkAppColors: ColorScheme = darkColorScheme(
+    primary = Color(0xFFB7E2C9),
+    secondary = Color(0xFF8FB8A3),
+    background = Color(0xFF0D1712),
+    surface = Color(0xFF17251E),
+    error = Color(0xFFFFB4AB),
+    onPrimary = Color(0xFF0B1F16),
+    onSecondary = Color(0xFF0E2118),
+    onBackground = Color(0xFFEAF2ED),
+    onSurface = Color(0xFFEAF2ED),
+    onError = Color(0xFF690005)
 )
 
 private val InterFamily = FontFamily(
@@ -92,10 +108,24 @@ private val AppTypography = Typography(
 )
 
 @Composable
-fun TravelMemorizeTheme(content: @Composable () -> Unit) {
-    MaterialTheme(
-        colorScheme = AppColors,
-        typography = AppTypography,
-        content = content
-    )
+fun TravelMemorizeTheme(
+    themeMode: ThemeMode = ThemeMode.SYSTEM,
+    content: @Composable () -> Unit
+) {
+    val isDarkTheme = when (themeMode) {
+        ThemeMode.LIGHT -> false
+        ThemeMode.DARK -> true
+        ThemeMode.SYSTEM -> isSystemInDarkTheme()
+    }
+    val colorScheme = if (isDarkTheme) DarkAppColors else AppColors
+    val extendedColors = if (isDarkTheme) DarkExtendedColors else LightExtendedColors
+    CompositionLocalProvider(
+        LocalExtendedColors provides extendedColors
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = AppTypography,
+            content = content
+        )
+    }
 }

@@ -2,15 +2,13 @@ package ru.itis.android.travel_memorize_app.navigation
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ru.itis.android.travel_memorize_app.core.domain.usecase.SendPasswordResetUseCase
-import ru.itis.android.travel_memorize_app.core.domain.usecase.SignInUseCase
-import ru.itis.android.travel_memorize_app.core.domain.usecase.SignUpUseCase
 import ru.itis.android.travel_memorize_app.feature.auth.ui.ForgotPasswordScreen
 import ru.itis.android.travel_memorize_app.feature.auth.ui.OnboardingScreen
 import ru.itis.android.travel_memorize_app.feature.auth.ui.SignInScreen
@@ -31,12 +29,9 @@ object Routes {
 @Composable
 fun AppNavGraph(
     startDestination: String,
-    signUpUseCase: SignUpUseCase,
-    signInUseCase: SignInUseCase,
-    sendPasswordResetUseCase: SendPasswordResetUseCase
+    viewModelFactory: ViewModelProvider.Factory
 ) {
     val navController = rememberNavController()
-
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -45,13 +40,15 @@ fun AppNavGraph(
             OnboardingScreen(
                 onGetStarted = {
                     navController.navigate(Routes.SignUp)
+                },
+                onNavigateToSignIn = {
+                    navController.navigate(Routes.SignIn)
                 }
             )
         }
 
         composable(Routes.SignUp) {
-            val viewModel = remember { SignUpViewModel(signUpUseCase) }
-
+            val viewModel: SignUpViewModel = viewModel(factory = viewModelFactory)
             SignUpScreen(
                 viewModel = viewModel,
                 onBack = {
@@ -75,10 +72,8 @@ fun AppNavGraph(
                 }
             )
         }
-
         composable(Routes.SignIn) {
-            val viewModel = remember { SignInViewModel(signInUseCase) }
-
+            val viewModel: SignInViewModel = viewModel(factory = viewModelFactory)
             SignInScreen(
                 viewModel = viewModel,
                 onBack = {
@@ -109,8 +104,7 @@ fun AppNavGraph(
         }
 
         composable(Routes.ForgotPassword) {
-            val viewModel = remember { ForgotPasswordViewModel(sendPasswordResetUseCase) }
-
+            val viewModel: ForgotPasswordViewModel = viewModel(factory = viewModelFactory)
             ForgotPasswordScreen(
                 viewModel = viewModel,
                 onBack = {

@@ -21,13 +21,6 @@ android {
 }
 
 dependencies {
-    // Core Android
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.x.lifecycle.runtime.ktx)
-    implementation(libs.x.activity.compose)
-    implementation(libs.retrofit)
 
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
@@ -39,8 +32,12 @@ dependencies {
     implementation(project(path = ":core:build-config:impl"))
     implementation(project(path = ":core:utils"))
 
-    implementation("androidx.navigation:navigation-compose:2.9.0")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.x.activity.compose)
+    implementation(libs.x.lifecycle.runtime.ktx)
+    implementation(libs.navigation.compose)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
 }

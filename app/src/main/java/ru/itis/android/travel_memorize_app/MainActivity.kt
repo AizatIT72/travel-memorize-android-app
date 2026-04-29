@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.*
 import ru.itis.android.travel_memorize_app.core.domain.utils.Result
+import ru.itis.android.travel_memorize_app.core.ui.theme.ThemeMode
 import ru.itis.android.travel_memorize_app.core.ui.theme.TravelMemorizeTheme
 import ru.itis.android.travel_memorize_app.navigation.AppNavGraph
 import ru.itis.android.travel_memorize_app.navigation.Routes
@@ -30,13 +31,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            TravelMemorizeTheme {
+            TravelMemorizeTheme ( themeMode = ThemeMode.SYSTEM) {
                 startDestination?.let {
                     AppNavGraph(
                         startDestination = it,
-                        signUpUseCase = appComponent.signUpUseCase(),
-                        signInUseCase = appComponent.signInUseCase(),
-                        sendPasswordResetUseCase = appComponent.sendPasswordResetUseCase()
+                        viewModelFactory = appComponent.viewModelFactory()
                     )
                 }
             }
