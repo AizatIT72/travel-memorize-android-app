@@ -1,28 +1,33 @@
 package ru.itis.android.travel_memorize_app.feature.auth.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,7 +38,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -45,13 +51,15 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import ru.itis.android.travel_memorize_app.core.ui.components.BackButton
 import ru.itis.android.travel_memorize_app.core.ui.components.CustomButton
 import ru.itis.android.travel_memorize_app.core.ui.components.CustomCard
 import ru.itis.android.travel_memorize_app.core.ui.components.CustomTextField
 import ru.itis.android.travel_memorize_app.core.ui.components.ErrorMessage
 import ru.itis.android.travel_memorize_app.core.ui.extensions.clearFocusOnTap
+import ru.itis.android.travel_memorize_app.core.ui.theme.LocalExtendedColors
+import ru.itis.android.travel_memorize_app.feature.auth.viewmodel.AuthEffect
 import ru.itis.android.travel_memorize_app.feature.auth.viewmodel.SignInViewModel
 import ru.itis.android.travel_memorize_app.ui.R
 
@@ -63,56 +71,57 @@ fun SignInScreen(
     onNavigateToForgotPassword: () -> Unit,
     onSuccess: () -> Unit
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
+    val passwordFocusRequester = remember { FocusRequester() }
+    val colorScheme = MaterialTheme.colorScheme
+    val extendedColors = LocalExtendedColors.current
     var passwordVisible by remember { mutableStateOf(false) }
-
-    LaunchedEffect(viewModel.success) {
-        if (viewModel.success) onSuccess()
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            when (effect) {
+                AuthEffect.NavigateToMap -> onSuccess()
+                AuthEffect.PasswordResetSent -> Unit
+            }
+        }
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFCF9F4))
+            .background(colorScheme.background)
             .clearFocusOnTap()
             .verticalScroll(rememberScrollState())
             .imePadding()
+            .statusBarsPadding()
+            .navigationBarsPadding()
             .padding(horizontal = 24.dp, vertical = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_back_circle_placeholder),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(40.dp)
-                    .clickable(onClick = onBack)
-            )
+            BackButton(onClick = onBack)
         }
-
         Spacer(modifier = Modifier.height(24.dp))
 
         Box(
             modifier = Modifier
                 .size(64.dp)
-                .background(Color(0xFFE5E2DD), CircleShape),
+                .background(extendedColors.decorativeIconBackground, CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Image(
+            Icon(
                 painter = painterResource(id = R.drawable.ic_leaf_placeholder),
                 contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(22.dp)
             )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
-
         Text(
             text = stringResource(R.string.signin_title),
-            fontWeight = FontWeight.Bold,
-            fontSize = 36.sp,
-            lineHeight = 40.sp,
-            color = Color(0xFF1C1C19),
+            style = MaterialTheme.typography.displayLarge,
+            color = colorScheme.onBackground,
             textAlign = TextAlign.Center
         )
 
@@ -120,55 +129,48 @@ fun SignInScreen(
 
         Text(
             text = stringResource(R.string.signin_subtitle),
-            color = Color(0xCC414845),
-            fontSize = 16.sp,
-            lineHeight = 24.sp,
+            style = MaterialTheme.typography.bodyLarge.copy(
+                fontWeight = FontWeight.Normal
+            ),
+            color = extendedColors.secondaryText,
             textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(28.dp))
-
         CustomCard(
             modifier = Modifier.fillMaxWidth(),
-            contentPadding = androidx.compose.foundation.layout.PaddingValues(
-                horizontal = 24.dp,
-                vertical = 28.dp
-            )
+            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 28.dp)
         ) {
             Column {
                 Text(
                     text = stringResource(R.string.label_email).uppercase(),
-                    fontSize = 11.sp,
-                    lineHeight = 16.sp,
-                    letterSpacing = 1.1.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF163429),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = colorScheme.primary,
                     modifier = Modifier.padding(start = 4.dp, bottom = 8.dp)
                 )
 
                 CustomTextField(
-                    value = viewModel.email,
+                    value = state.email,
                     onValueChange = viewModel::onEmailChanged,
                     placeholder = "hello@travelmemorize.com",
-                    isError = false,
+                    isError = state.emailError,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Next,
                         autoCorrectEnabled = false
                     ),
                     keyboardActions = KeyboardActions(
-                        onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                        onNext = { passwordFocusRequester.requestFocus() }
                     ),
                     trailingIcon = {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_input_email),
                             contentDescription = null,
-                            tint = Color(0xFFA8A29E)
+                            tint = extendedColors.inputMuted
                         )
                     }
                 )
-
-                viewModel.emailError?.let {
+                if (state.emailError) {
                     Spacer(modifier = Modifier.height(6.dp))
                     ErrorMessage(stringResource(R.string.error_invalid_email))
                 }
@@ -183,32 +185,27 @@ fun SignInScreen(
                 ) {
                     Text(
                         text = stringResource(R.string.label_password).uppercase(),
-                        fontSize = 11.sp,
-                        lineHeight = 16.sp,
-                        letterSpacing = 1.1.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF163429)
+                        style = MaterialTheme.typography.labelMedium,
+                        color = colorScheme.primary
                     )
-
                     Spacer(modifier = Modifier.weight(1f))
-
                     Text(
                         text = stringResource(R.string.link_forgot_password).uppercase(),
-                        color = Color(0xFF43664D),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 11.sp,
-                        letterSpacing = 0.55.sp,
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            letterSpacing = 0.55.sp
+                        ),
+                        color = extendedColors.linkText,
                         modifier = Modifier.clickable { onNavigateToForgotPassword() }
                     )
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
-
                 CustomTextField(
-                    value = viewModel.password,
+                    value = state.password,
                     onValueChange = viewModel::onPasswordChanged,
                     placeholder = "••••••••",
-                    isError = false,
+                    isError = state.passwordError,
+                    modifier = Modifier.focusRequester(passwordFocusRequester),
                     visualTransformation = if (passwordVisible) {
                         VisualTransformation.None
                     } else {
@@ -222,7 +219,7 @@ fun SignInScreen(
                     keyboardActions = KeyboardActions(
                         onDone = {
                             focusManager.clearFocus()
-                            if (viewModel.canSubmit()) viewModel.signIn()
+                            viewModel.signIn()
                         }
                     ),
                     trailingIcon = {
@@ -234,22 +231,19 @@ fun SignInScreen(
                                     Icons.Filled.Visibility
                                 },
                                 contentDescription = null,
-                                tint = Color(0xFFA8A29E)
+                                tint = extendedColors.inputMuted
                             )
                         }
                     }
                 )
-
-                viewModel.passwordError?.let {
+                if (state.passwordError) {
                     Spacer(modifier = Modifier.height(6.dp))
-                    ErrorMessage(stringResource(R.string.error_password_length))
+                    ErrorMessage(stringResource(R.string.error_empty_password))
                 }
-
-                viewModel.commonError?.let {
+                state.commonError?.let { error ->
                     Spacer(modifier = Modifier.height(6.dp))
-                    ErrorMessage(it)
+                    ErrorMessage(stringResource(error.toMessageRes()))
                 }
-
                 Spacer(modifier = Modifier.height(24.dp))
 
                 CustomButton(
@@ -258,35 +252,33 @@ fun SignInScreen(
                         focusManager.clearFocus()
                         viewModel.signIn()
                     },
-                    enabled = viewModel.canSubmit(),
+                    enabled = state.isSubmitEnabled,
                     modifier = Modifier.fillMaxWidth(),
                     height = 56.dp
                 )
             }
         }
-
         Spacer(modifier = Modifier.height(40.dp))
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                stringResource(R.string.signin_have_no_account),
-                color = Color(0xFF414845),
-                fontSize = 14.sp
+                text = stringResource(R.string.signin_have_no_account),
+                style = MaterialTheme.typography.bodyMedium,
+                color = extendedColors.bodySecondaryText
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
-                stringResource(R.string.signin_register_now),
-                color = Color(0xFF163429),
-                fontWeight = FontWeight.Bold,
-                fontSize = 14.sp,
+                text = stringResource(R.string.signin_register_now),
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.Bold
+                ),
+                color = colorScheme.primary,
                 modifier = Modifier.clickable { onNavigateToSignUp() }
             )
         }
-
         Spacer(modifier = Modifier.height(24.dp))
     }
 }

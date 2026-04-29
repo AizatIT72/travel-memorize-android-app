@@ -20,13 +20,16 @@ compose-activity = "1.12.3"
 compose-foundation = "1.10.2"
 compose-ui = "1.10.2"
 compose-material3 = "1.4.0"
+navigation-compose = "2.9.0"
+lifecycle-runtime-compose = "2.10.0"
+lifecycle-viewmodel-ktx = "2.10.0"
+lifecycle-viewmodel-compose = "2.10.0"
 # Dagger
 dagger = "2.59.2"
 javax-inject = "1"
 # Retrofit
 retrofit = "3.0.0"
-
-gradle-secrets = "2.0.1"
+compose-material-icons = "1.7.8"
 
 # Tests
 junit = "4.13.2"
@@ -40,6 +43,7 @@ firebase-bom = "33.0.0"
 google-services = "4.4.0"
 
 [libraries]
+coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version = "1.10.2" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
@@ -56,12 +60,16 @@ compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", ver
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose-ui" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose-ui" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }
+compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "compose-material-icons" }
+lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycle-runtime-ktx" }
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
+lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle-runtime-compose" }
+lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle-viewmodel-ktx" }
+lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose" }
 
 # Hilt & Dagger
-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger" }
-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger" }
 javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javax-inject" }
-dagger = { module = "com.google.dagger:dagger-android", version.ref = "dagger" }
+dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 
 # Retrofit
@@ -84,8 +92,6 @@ firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage-ktx" }
 google-services-plugin = { group = "com.google.gms", name = "google-services", version.ref = "google-services" }
 
-
-
 [bundles]
 compose-ui = ["compose-ui", "compose-ui-graphics", "compose-ui-tooling", "compose-ui-tooling-preview"]
 
@@ -93,17 +99,15 @@ compose-ui = ["compose-ui", "compose-ui-graphics", "compose-ui-tooling", "compos
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 #Detekt
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-google-services = { id = "com.google.gms.google-services", version = "4.4.0" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 
 
 # Project Internal convention plugins
 app-android-application = { id = "app.android.application" }
 app-android-library = { id = "app.android.libary" }
 app-compose = { id = "app.compose" }
-app-hilt = { id = "app.hilt" }
 app-dagger = { id = "app.dagger" }
 app-firebase = { id = "app.firebase" }

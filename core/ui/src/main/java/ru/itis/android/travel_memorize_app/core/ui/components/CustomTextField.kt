@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import ru.itis.android.travel_memorize_app.core.ui.theme.LocalExtendedColors
 
 @Composable
 fun CustomTextField(
@@ -26,8 +27,12 @@ fun CustomTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    trailingIcon: (@Composable (() -> Unit))? = null
+    trailingIcon: (@Composable (() -> Unit))? = null,
+    singleLine: Boolean = true
 ) {
+    val colorScheme = MaterialTheme.colorScheme
+    val extendedColors = LocalExtendedColors.current
+
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
@@ -37,7 +42,6 @@ fun CustomTextField(
         placeholder = {
             Text(
                 text = placeholder,
-                color = Color(0xFFA8A29E),
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.Normal
                 )
@@ -48,20 +52,31 @@ fun CustomTextField(
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
         trailingIcon = trailingIcon,
-        singleLine = true,
+        singleLine = singleLine,
         shape = RoundedCornerShape(999.dp),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = Color.Transparent,
             unfocusedBorderColor = Color.Transparent,
             errorBorderColor = Color.Transparent,
-            focusedContainerColor = Color(0xFFEBE8E3),
-            unfocusedContainerColor = Color(0xFFEBE8E3),
-            errorContainerColor = Color(0xFFEBE8E3),
-            disabledContainerColor = Color(0xFFEBE8E3),
-            cursorColor = Color(0xFF163429),
-            focusedTextColor = Color(0xFF1C1C19),
-            unfocusedTextColor = Color(0xFF1C1C19),
-            errorTextColor = Color(0xFF1C1C19)
+
+            focusedContainerColor = extendedColors.inputContainer,
+            unfocusedContainerColor = extendedColors.inputContainer,
+            errorContainerColor = extendedColors.inputContainer,
+            disabledContainerColor = extendedColors.inputContainer,
+
+            cursorColor = colorScheme.primary,
+
+            focusedTextColor = colorScheme.onSurface,
+            unfocusedTextColor = colorScheme.onSurface,
+            errorTextColor = colorScheme.onSurface,
+
+            focusedPlaceholderColor = extendedColors.inputMuted,
+            unfocusedPlaceholderColor = extendedColors.inputMuted,
+            errorPlaceholderColor = extendedColors.inputMuted,
+
+            focusedTrailingIconColor = extendedColors.inputMuted,
+            unfocusedTrailingIconColor = extendedColors.inputMuted,
+            errorTrailingIconColor = extendedColors.inputMuted
         )
     )
 }
