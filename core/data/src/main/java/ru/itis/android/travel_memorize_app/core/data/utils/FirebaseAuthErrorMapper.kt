@@ -5,37 +5,35 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import ru.itis.android.travel_memorize_app.core.domain.utils.AppError
+import ru.itis.android.travel_memorize_app.core.domain.utils.AuthError
 
 object FirebaseAuthErrorMapper {
 
-    fun mapSignInError(throwable: Throwable): AppError.Auth {
+    fun mapSignInError(throwable: Throwable): AuthError {
         return when (throwable) {
             is FirebaseAuthInvalidCredentialsException,
-            is FirebaseAuthInvalidUserException -> AppError.Auth.InvalidEmailOrPassword
-
-            is FirebaseNetworkException -> AppError.Auth.Network
-
-            else -> AppError.Auth.Unknown
+            is FirebaseAuthInvalidUserException -> AuthError.InvalidEmailOrPassword
+            is FirebaseNetworkException -> AuthError.Network
+            else -> AuthError.Unknown
         }
     }
 
-    fun mapSignUpError(throwable: Throwable): AppError.Auth {
+    fun mapSignUpError(throwable: Throwable): AuthError {
         return when (throwable) {
-            is FirebaseAuthUserCollisionException -> AppError.Auth.EmailAlreadyRegistered
-            is FirebaseAuthWeakPasswordException -> AppError.Auth.WeakPassword
-            is FirebaseAuthInvalidCredentialsException -> AppError.Auth.InvalidEmail
-            is FirebaseNetworkException -> AppError.Auth.Network
-            else -> AppError.Auth.Unknown
+            is FirebaseAuthUserCollisionException -> AuthError.EmailAlreadyRegistered
+            is FirebaseAuthWeakPasswordException -> AuthError.WeakPassword
+            is FirebaseAuthInvalidCredentialsException -> AuthError.InvalidEmail
+            is FirebaseNetworkException -> AuthError.Network
+            else -> AuthError.Unknown
         }
     }
 
-    fun mapResetPasswordError(throwable: Throwable): AppError.Auth {
+    fun mapResetPasswordError(throwable: Throwable): AuthError {
         return when (throwable) {
-            is FirebaseAuthInvalidUserException -> AppError.Auth.UserNotFound
-            is FirebaseAuthInvalidCredentialsException -> AppError.Auth.InvalidEmail
-            is FirebaseNetworkException -> AppError.Auth.Network
-            else -> AppError.Auth.Unknown
+            is FirebaseAuthInvalidUserException -> AuthError.UserNotFound
+            is FirebaseAuthInvalidCredentialsException -> AuthError.InvalidEmail
+            is FirebaseNetworkException -> AuthError.Network
+            else -> AuthError.Unknown
         }
     }
 }

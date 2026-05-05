@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -29,7 +29,7 @@ fun BackButton(
         contentAlignment = Alignment.Center
     ) {
         Icon(
-            imageVector = Icons.Filled.ArrowBack,
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(22.dp)

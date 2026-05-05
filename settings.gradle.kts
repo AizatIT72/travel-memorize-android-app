@@ -1,3 +1,8 @@
+import java.util.Properties
+
+include(":feature:navigation")
+
+
 pluginManagement {
     includeBuild("convention-plugins")
     repositories {
@@ -12,11 +17,30 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+val localProperties = Properties().apply {
+    val file = File(rootDir, "local.properties")
+    if (file.exists()) {
+        file.inputStream().use { load(it) }
+    }
+}
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
+
+        maven {
+            url = uri("https://api.mapbox.com/downloads/v2/releases/maven")
+
+            authentication {
+                create<BasicAuthentication>("basic")
+            }
+
+            credentials {
+                username = "mapbox"
+                password = localProperties.getProperty("MAPBOX_DOWNLOADS_TOKEN", "")
+            }
+        }
     }
 }
 
@@ -31,3 +55,6 @@ include(":core:utils")
 include(":core:ui")
 include(":feature:auth")
 include(":feature:map")
+include(":feature:memory")
+include(":feature:friends")
+include(":feature:profile")

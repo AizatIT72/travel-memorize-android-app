@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.app.android.library)
+    alias(libs.plugins.app.compose)
 }
 
 android {
@@ -8,6 +9,5 @@ android {
 
 dependencies {
 
-    implementation(project(":core:network"))
     implementation(libs.javax.inject)
 }
