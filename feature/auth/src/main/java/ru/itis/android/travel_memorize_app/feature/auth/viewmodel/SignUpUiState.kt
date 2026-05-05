@@ -1,6 +1,6 @@
 package ru.itis.android.travel_memorize_app.feature.auth.viewmodel
 
-import ru.itis.android.travel_memorize_app.core.domain.utils.AppError
+import ru.itis.android.travel_memorize_app.core.domain.utils.AuthError
 
 data class SignUpUiState(
     val username: String = "",
@@ -11,7 +11,7 @@ data class SignUpUiState(
     val emailError: Boolean = false,
     val passwordError: Boolean = false,
     val confirmPasswordError: Boolean = false,
-    val commonError: AppError? = null,
+    val commonError: AuthError? = null,
     val isLoading: Boolean = false,
     val isSubmitEnabled: Boolean = false,
     val wasSubmitted: Boolean = false

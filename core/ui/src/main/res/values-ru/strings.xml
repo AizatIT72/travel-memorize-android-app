@@ -53,4 +53,124 @@
     <string name="error_sign_in_failed">Не удалось войти. Попробуйте ещё раз</string>
     <string name="error_sign_up_failed">Не удалось создать аккаунт. Попробуйте ещё раз</string>
     <string name="error_reset_failed">Не удалось отправить ссылку. Попробуйте ещё раз</string>
+
+    <string name="nav_map">Карта</string>
+    <string name="nav_feed">Воспоминания</string>
+    <string name="nav_friends">Друзья</string>
+    <string name="nav_profile">Профиль</string>
+
+    <string name="button_add_memory">Добавить воспоминание</string>
+    <string name="error_no_location_permission">Требуется разрешение на местоположение</string>
+    <string name="error_place_not_found">Место не найдено</string>
+    <string name="error_invalid_token">Неверный токен</string>
+    <string name="error_rate_limited">Превышен лимит запросов</string>
+    <string name="nav_map_search_placeholder">Поиск воспомиания</string>
+
+    <string name="new_memory">Новое воспоминание</string>
+    <string name="add_photo">Добавить фото</string>
+    <string name="enter_place_name">Введите название места</string>
+    <string name="enter_visit_date">Дата посещения</string>
+    <string name="enter_story">Напишите историю воспоминаний</string>
+    <string name="save_memory">Сохранить</string>
+    <string name="error_generic">Произошла ошибка. Попробуйте ещё раз.</string>
+
+    <string name="memories">Воспоминания</string>
+
+    <string name="photo_section">Фото</string>
+    <string name="photo_count">%1$d / %2$d фото</string>
+    <string name="place_name_label">Укажите название места</string>
+    <string name="visit_date_label">Укажите дату посещения</string>
+    <string name="story_label">История</string>
+    <string name="cancel">Отмена</string>
+
+    <string name="select_place">Выбрать место</string>
+    <string name="long_press_to_select_place">Зажмите карту, чтобы выбрать место</string>
+
+    <string name="memory_details_title">Воспоминания</string>
+    <string name="memory_not_found">Воспоминание не найдено</string>
+    <string name="empty_story">История пока не добавлена</string>
+
+    <string name="memory_search_title">Поиск воспоминаний</string>
+    <string name="memory_search_empty">Воспоминания не найдены</string>
+
+    <string name="edit_memory">Редактировать воспоминание</string>
+    <string name="delete_forever">Удалить навсегда</string>
+    <string name="delete_memory_title">Удалить воспоминание?</string>
+    <string name="delete_memory_message">Это действие нельзя отменить.</string>
+    <string name="delete">Удалить</string>
+
+    <string name="edit_memory_title">Редактировать метку</string>
+    <string name="add_photo_short">Добавить</string>
+    <string name="delete_memory">Удалить метку</string>
+    <string name="save_changes">Сохранить изменения</string>
+
+    <string name="memories_feed_title">Лента воспоминаний</string>
+    <string name="sort_memories">Сортировать воспоминания</string>
+    <string name="change_layout">Изменить вид</string>
+    <string name="sort_newest_first">Сначала новые</string>
+    <string name="sort_oldest_first">Сначала старые</string>
+    <string name="sort_title_asc">По названию А–Я</string>
+    <string name="sort_title_desc">По названию Я–А</string>
+    <string name="empty_memories_title">Пока нет воспоминаний</string>
+    <string name="empty_memories_message">Выберите место на карте и сохраните первое воспоминание.</string>
+    <string name="date_unknown">Дата неизвестна</string>
+
+    <string name="profile">Профиль</string>
+    <string name="profile_countries">Страны</string>
+    <string name="profile_cities">Города</string>
+    <string name="profile_memories">Воспоминания</string>
+    <string name="profile_preferences">Предпочтения</string>
+    <string name="dark_mode">Тёмная тема</string>
+    <string name="language">Язык</string>
+    <string name="language_current">Русский</string>
+    <string name="edit_profile">Редактировать профиль</string>
+    <string name="logout">Выйти</string>
+
+    <string name="personal_identity">Личная информация</string>
+    <string name="username">Имя пользователя</string>
+    <string name="username_placeholder">Введите имя пользователя</string>
+    <string name="username_hint">Только английские буквы, цифры и нижнее подчёркивание.</string>
+    <string name="email_address">Электронная почта</string>
+    <string name="location">Локация</string>
+    <string name="city_placeholder">Город</string>
+    <string name="country_placeholder">Страна</string>
+    <string name="bio">Описание</string>
+    <string name="bio_placeholder">Расскажите о себе...</string>
+    <string name="account_privacy">Безопасность аккаунта</string>
+    <string name="account_privacy_description">Управляйте данными и постоянным удалением аккаунта.</string>
+    <string name="delete_account">Удалить аккаунт</string>
+    <string name="delete_account_title">Удалить аккаунт?</string>
+    <string name="delete_account_message">Это действие нельзя отменить. Аккаунт, профиль и ваши воспоминания будут удалены навсегда.</string>
+
+    <string name="your_friends">Ваши друзья</string>
+    <string name="search_friends">Искать друзей</string>
+    <string name="friend_requests">Запросы</string>
+    <string name="sent_requests">Отправленные заявки</string>
+    <string name="all_friends">Все друзья</string>
+    <string name="no_friends_yet">Пока нет друзей</string>
+    <string name="no_friends_description">Найдите людей и добавьте их, чтобы видеть их воспоминания о путешествиях.</string>
+    <string name="add_friend">Добавить в друзья</string>
+    <string name="clear">Очистить</string>
+    <string name="done">Готово</string>
+    <string name="search">Поиск</string>
+    <string name="you">Это вы</string>
+    <string name="already_friend">В друзьях</string>
+    <string name="sent">Отправлено</string>
+    <string name="add">Добавить</string>
+    <string name="profile_not_found">Профиль не найден</string>
+    <string name="remove_from_friends">Удалить из друзей</string>
+    <string name="remove_friend_message">Вы уверены, что хотите удалить этого пользователя из друзей?</string>
+    <string name="show_friend_map">Показать карту</string>
+    <string name="latest_memories">Последние воспоминания</string>
+    <string name="memories_count">Воспоминания</string>
+    <string name="countries">Страны</string>
+    <string name="cities">Города</string>
+
+    <string name="friends">Друзья</string>
+
+    <string name="friend_map">Карта друга</string>
+    <string name="no_friend_memories">У друга пока нет воспоминаний</string>
+
+
+    <string name="mapbox_access_token">YOUR_MAPBOX_TOKEN</string>
 </resources>

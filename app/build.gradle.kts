@@ -31,8 +31,15 @@ dependencies {
     implementation(project(path = ":core:build-config:api"))
     implementation(project(path = ":core:build-config:impl"))
     implementation(project(path = ":core:utils"))
+    implementation(project(path = ":feature:navigation"))
+    implementation(project(path = ":feature:profile"))
+    implementation(project(path = ":feature:friends"))
+    implementation(project(path = ":feature:memory"))
+
+
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.mapbox.maps)
     implementation(libs.x.activity.compose)
     implementation(libs.x.lifecycle.runtime.ktx)
     implementation(libs.navigation.compose)
@@ -40,4 +47,8 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.storage)
+    implementation(libs.retrofit)
+    implementation(libs.androidx.runtime)
+    implementation("com.mapbox.extension:maps-compose-ndk27:11.22.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
 }

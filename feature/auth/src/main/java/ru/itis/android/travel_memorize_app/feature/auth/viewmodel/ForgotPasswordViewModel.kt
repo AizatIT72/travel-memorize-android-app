@@ -1,6 +1,5 @@
 package ru.itis.android.travel_memorize_app.feature.auth.viewmodel
 
-import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import javax.inject.Inject
